@@ -5,6 +5,13 @@ import time
 sys.path.append('./build')
 import cpp_math
 
+def add_lists(a, b):
+    # This loop is interpreted by the Python interpreter, which is slow
+    result = []
+    for i in range(len(a)):
+        result.append(a[i] + b[i])
+    return result
+
 def main():
     # Create large NumPy arrays
     size = 10_000_000
@@ -23,9 +30,15 @@ def main():
     end_time_cpp = time.time()
     print(f"C++ execution time:   {(end_time_cpp - start_time_cpp) * 1000:.2f} ms")
 
+    # --- Benchmark pure Python ---
+    start_time_py = time.time()
+    result_py = add_lists(arr1, arr2)
+    end_time_py = time.time()
+    print(f"Pure Python execution time: {(end_time_py - start_time_py) * 1000:.2f} ms")
+
     # Verify the results are the same
-    assert np.allclose(result_np, result_cpp)
-    print("\nResults from NumPy and C++ are identical.")
+    assert np.allclose(result_np, result_cpp, result_py)
+    print("\nResults from NumPy , C++ and pure Python are identical.")
 
 if __name__ == "__main__":
     main()
