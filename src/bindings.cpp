@@ -16,4 +16,7 @@ PYBIND11_MODULE(cpp_math, m) {
     // 2nd arg: A pointer to the C++ function (&add_vectors).
     // 3rd arg: A docstring for the function.
     m.def("add_vectors", &add_vectors, "A function that adds two vectors element-wise.");
+    m.def("add_arrays", &add_arrays, "A function that adds two NumPy arrays.");
+
+    
 }

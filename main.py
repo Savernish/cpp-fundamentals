@@ -1,30 +1,31 @@
 import sys
+import numpy as np
+import time
 
-# We need to tell Python where to find our new module.
-# The compiled file will be in the 'build' directory.
 sys.path.append('./build')
-
-try:
-    # Import the module. The name 'cpp_math' must match the one in CMakeLists.txt
-    import cpp_math
-except ImportError as e:
-    print("Error importing C++ module. Did you build the project?")
-    print(e)
-    sys.exit(1)
+import cpp_math
 
 def main():
-    vec1 = [1.1, 2.2, 3.3]
-    vec2 = [4.4, 5.5, 6.6]
+    # Create large NumPy arrays
+    size = 10_000_000
+    arr1 = np.random.rand(size).astype(np.float64)
+    arr2 = np.random.rand(size).astype(np.float64)
 
-    print(f"Calling C++ function from Python with lists: {vec1} and {vec2}")
+    # --- Benchmark NumPy ---
+    start_time_np = time.time()
+    result_np = np.add(arr1, arr2)
+    end_time_np = time.time()
+    print(f"NumPy execution time: {(end_time_np - start_time_np) * 1000:.2f} ms")
 
-    # Call the C++ function as if it were a normal Python function.
-    # PyBind11 automatically converts the Python lists to std::vector<double>
-    # and converts the result back to a Python list.
-    result = cpp_math.add_vectors(vec1, vec2)
+    # --- Benchmark C++ ---
+    start_time_cpp = time.time()
+    result_cpp = cpp_math.add_arrays(arr1, arr2)
+    end_time_cpp = time.time()
+    print(f"C++ execution time:   {(end_time_cpp - start_time_cpp) * 1000:.2f} ms")
 
-    print(f"Result from C++: {result}")
-    print(f"Docstring from C++: {cpp_math.add_vectors.__doc__}")
+    # Verify the results are the same
+    assert np.allclose(result_np, result_cpp)
+    print("\nResults from NumPy and C++ are identical.")
 
 if __name__ == "__main__":
     main()
