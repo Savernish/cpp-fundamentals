@@ -17,8 +17,8 @@ While Python is exceptional for research and prototyping, production ML systems 
 | **Core Concepts** | RAII & Smart Pointers | ✅ Done | Understanding modern C++ memory management (`unique_ptr`, `shared_ptr`). |
 | | STL Containers | ✅ Done | Practical use of `vector`, `string`, `unordered_map`, etc. |
 | **Build Systems** | CMake Basics | ✅ Done | Creating and building executables with `CMakeLists.txt`. |
-| | Static & Shared Libraries | ⏳ Planned | Building modular, reusable code libraries. |
-| **Python Integration** | PyBind11: Basic Bindings | ⏳ Planned | Exposing C++ functions and classes to Python. |
+| | Static & Shared Libraries | ✅ Done | Building modular, reusable code libraries. |
+| **Python Integration** | PyBind11: Basic Bindings | ✅ Done | Exposing C++ functions and classes to Python. |
 | | PyBind11: NumPy Integration | ⏳ Planned | Passing NumPy arrays to C++ efficiently without copying data. |
 | **ML Acceleration** | C++ Inference Engine | ⏳ Planned | Implementing a neural network forward pass in C++ using Eigen or a similar library. |
 | | C++ Accelerated Algorithms | ⏳ Planned | Rewriting performance-critical Python algorithms (e.g., in computer vision) in C++. |
