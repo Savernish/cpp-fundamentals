@@ -17,6 +17,7 @@ PYBIND11_MODULE(cpp_math, m) {
     // 3rd arg: A docstring for the function.
     m.def("add_vectors", &add_vectors, "A function that adds two vectors element-wise.");
     m.def("add_arrays", &add_arrays, "A function that adds two NumPy arrays.");
+    m.def("add_scalar_inplace", &add_scalar_inplace, "Adds a scalar to a NumPy array in-place.");
 
     
 }

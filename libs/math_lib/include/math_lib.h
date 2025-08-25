@@ -10,4 +10,6 @@ std::vector<double> add_vectors(const std::vector<double>& a, const std::vector<
 
 pybind11::array_t<double> add_arrays(pybind11::array_t<double>& a, pybind11::array_t<double>& b);
 
+void add_scalar_inplace(pybind11::array_t<double>& arr, double scalar);
+
 #endif // MATH_LIB_H

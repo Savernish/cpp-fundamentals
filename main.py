@@ -40,5 +40,17 @@ def main():
     assert np.allclose(result_np, result_cpp, result_py)
     print("\nResults from NumPy , C++ and pure Python are identical.")
 
+    print("--- Demonstrating in-place modification via C++ ---")
+    # Create an array
+    arr = np.array([1.0, 2.0, 3.0], dtype=np.float64)
+    print(f"Original array: {arr}")
+
+    # Call the C++ function. It returns nothing.
+    cpp_math.add_scalar_inplace(arr, 100.0)
+
+    print(f"Array after C++ in-place modification: {arr}")
+    assert arr[0] == 101.0
+    print("In-place modification successful.")
+
 if __name__ == "__main__":
     main()

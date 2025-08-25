@@ -47,3 +47,16 @@ py::array_t<double> add_arrays(py::array_t<double>& a, py::array_t<double>& b) {
 
     return result;
 }
+
+void add_scalar_inplace(py::array_t<double>& arr, double scalar) {
+    // Request a mutable buffer from the input array
+    py::buffer_info buf = arr.request();
+
+    // Get a raw pointer to the underlying data
+    double* ptr = static_cast<double*>(buf.ptr);
+
+    // Iterate and modify the data directly in memory
+    for (size_t i = 0; i < buf.size; i++) {
+        ptr[i] += scalar;
+    }
+}
