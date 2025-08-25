@@ -35,7 +35,7 @@ add_library(inference_lib STATIC
 # Tell CMake where to find Eigen's headers
 target_include_directories(inference_lib PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/libs/inference_lib/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/third_party # Path to Eigen's parent dir
+    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/eigen # Path to Eigen's parent dir
 )
 
 # --- Build an executable to test the inference lib ---
