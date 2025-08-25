@@ -1,9 +1,5 @@
 #include "math_lib.h"
 #include <stdexcept>
-#include <pybind11/pybind11.h>
-#include <pybind11/numpy.h> // Include for NumPy support
-
-namespace py = pybind11;
 
 std::vector<double> add_vectors(const std::vector<double>& a, const std::vector<double>& b) {
     if (a.size() != b.size()) {
