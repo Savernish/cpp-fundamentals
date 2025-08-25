@@ -8,7 +8,7 @@ This repository is a structured exploration of modern C++ (C++17 and beyond) and
 
 ## Project Philosophy
 
-While Python is exceptional for research and prototyping, production ML systems often require the speed, memory control, and low-level hardware access that C++ provides. This project bridges that gap by systematically building the skills needed to write, build, and integrate high-performance C++ code into Python applications using tools like PyBind11.
+While Python is great for prototyping, production ML systems often need the speed and control of C++. This project shows how to bridge that gap, with real code and a test harness to verify C++ results against Python.
 
 ## Learning Roadmap & Modules
 
@@ -31,29 +31,31 @@ While Python is exceptional for research and prototyping, production ML systems 
 * **PyBind11:** For Python bindings.
 * **Compiler:** g++ (via `build-essential` on Ubuntu)
 
-## Build Instructions
+## Build & Verification Instructions
 
-This project is developed and tested on WSL2 (Ubuntu 24.04).
 
-1.  **Clone the repository:**
+This project is developed and tested on WSL2 (Ubuntu 24.04), but should work on any modern Linux with Python 3 and CMake 3.16+.
+
+### 1. Clone the repository
     ```bash
     git clone [https://github.com/your-username/cpp-fundamentals.git](https://github.com/your-username/cpp-fundamentals.git)
     cd cpp-fundamentals
     ```
 
-2.  **Configure with CMake:**
-    ```bash
-    # Create a build directory
-    cmake -S . -B build
-    ```
+### 2. Configure with CMake (for Python module)
+You must specify your Python version for PyBind11 to find the right headers. For example, for Python 3.11:
+```bash
+cmake -S . -B build -DPYTHON_EXECUTABLE=$(which python3.11)
+```
 
-3.  **Build the project:**
-    ```bash
-    cmake --build build
-    ```
+### 3. Build the project
+```bash
+cmake --build build
+```
 
-4.  **Run an executable:**
-    ```bash
-    # Example for the 'my_app' target
-    ./build/my_app
-    ```
+### 4. Run the Python verification
+The test harness compares the C++/Eigen neural network output to the reference Python/NumPy model:
+```bash
+python3 verify_inference.py
+```
+You should see matching outputs and timing for both implementations.
