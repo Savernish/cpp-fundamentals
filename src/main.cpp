@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "math_lib.h" // Include the header from your library
+#include "math_lib.h"
 
 int main() {
     std::vector<double> vec1 = {1.0, 2.0, 3.0};

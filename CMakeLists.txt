@@ -12,7 +12,6 @@ add_library(math_lib STATIC
     libs/math_lib/src/math_lib.cpp
 )
 
-# This is the line that will fix the relocation error
 set_property(TARGET math_lib PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 target_include_directories(math_lib PUBLIC
@@ -29,7 +28,18 @@ pybind11_add_module(cpp_math src/bindings.cpp)
 # Link the shared module to the static library
 target_link_libraries(cpp_math PRIVATE math_lib)
 
-# ... (rest of your CMakeLists.txt)
-add_executable(my_raii_app src/raii_example.cpp)
-add_executable(my_smart_ptr_app src/smart_pointers_example.cpp)
-add_executable(my_stl_app src/stl_example.cpp)
+# --- Build the inference_lib static library ---
+add_library(inference_lib STATIC
+    libs/inference_lib/src/inference_lib.cpp
+)
+# Tell CMake where to find Eigen's headers
+target_include_directories(inference_lib PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/libs/inference_lib/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/third_party # Path to Eigen's parent dir
+)
+
+# --- Build an executable to test the inference lib ---
+add_executable(inference_tester src/main_inference.cpp)
+
+# Link the tester against our inference library
+target_link_libraries(inference_tester PRIVATE inference_lib)
