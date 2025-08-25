@@ -20,7 +20,7 @@ While Python is exceptional for research and prototyping, production ML systems 
 | | Static & Shared Libraries | ✅ Done | Building modular, reusable code libraries. |
 | **Python Integration** | PyBind11: Basic Bindings | ✅ Done | Exposing C++ functions and classes to Python. |
 | | PyBind11: NumPy Integration | ✅ Done | Passing NumPy arrays to C++ efficiently without copying data. |
-| **ML Acceleration** | C++ Inference Engine | ⏳ Planned | Implementing a neural network forward pass in C++ using Eigen or a similar library. |
+| **ML Acceleration** | C++ Inference Engine | ✅ Done | Implementing a neural network forward pass in C++ using Eigen or a similar library. |
 | | C++ Accelerated Algorithms | ⏳ Planned | Rewriting performance-critical Python algorithms (e.g., in computer vision) in C++. |
 | **GPU Computing** | CUDA/Thrust Introduction | ⏳ Planned | Exploring basic GPU acceleration for parallelizable tasks. |
 
