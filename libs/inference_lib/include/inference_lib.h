@@ -1,10 +1,9 @@
 #ifndef INFERENCE_LIB_H
 #define INFERENCE_LIB_H
 
-#include <Eigen/Dense> // Core Eigen header
-#include <vector>
+#include <Eigen/Dense>
 
-// Performs a forward pass of a 784x128x10 MLP with ReLU activation.
+// This function is now pure C++/Eigen
 Eigen::VectorXd forward_pass(
     const Eigen::VectorXd& input,
     const Eigen::MatrixXd& w1,

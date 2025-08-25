@@ -1,23 +1,24 @@
 #include <pybind11/pybind11.h>
-#include <pybind11/stl.h> // Needed to automatically handle std::vector
-#include "math_lib.h"    // Include the header for our C++ library
+#include <pybind11/stl.h>
+#include <pybind11/numpy.h>
+#include <pybind11/eigen.h> // Header for automatic Eigen::MatrixXd <-> NumPy conversion
+
+// Include our pure C++ library headers
+#include "math_lib.h"
+#include "inference_lib.h"
 
 namespace py = pybind11;
 
-// PYBIND11_MODULE is a macro that creates a function that will be called when
-// the Python interpreter imports the module.
-// The first argument is the name of the module (as seen in Python).
-// The second argument, 'm', is a py::module_ object that is the main interface.
+// This is our main Python module, named 'cpp_math'
 PYBIND11_MODULE(cpp_math, m) {
-    m.doc() = "A Python module for our C++ math library, built with PyBind11";
+    m.doc() = "High-performance C++ module for ML acceleration";
 
-    // m.def() exposes a C++ function to Python.
-    // 1st arg: The name of the function in Python ("add_vectors").
-    // 2nd arg: A pointer to the C++ function (&add_vectors).
-    // 3rd arg: A docstring for the function.
+    // Binding for the function from math_lib
     m.def("add_vectors", &add_vectors, "A function that adds two vectors element-wise.");
-    m.def("add_arrays", &add_arrays, "A function that adds two NumPy arrays.");
-    m.def("add_scalar_inplace", &add_scalar_inplace, "Adds a scalar to a NumPy array in-place.");
 
-    
+    // Binding for the function from inference_lib
+    // PyBind11's <pybind11/eigen.h> header automatically handles the conversion
+    // between NumPy arrays and Eigen::MatrixXd / Eigen::VectorXd.
+    // This is much cleaner than our manual wrapper from before.
+    m.def("forward_pass_cpp", &forward_pass, "Performs a full MLP forward pass in C++ with Eigen.");
 }

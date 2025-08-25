@@ -1,5 +1,8 @@
 #include "inference_lib.h"
 #include <iostream>
+#include <pybind11/pybind11.h>
+#include <pybind11/numpy.h>
+
 
 // Element-wise ReLU activation function for Eigen matrices/vectors
 Eigen::MatrixXd relu(const Eigen::MatrixXd& x) {
@@ -30,4 +33,38 @@ Eigen::VectorXd forward_pass(
 
     // Return the result as a standard column vector
     return logits.transpose();
+}
+
+pybind11::array_t<double> forward_pass_numpy(
+    pybind11::array_t<double>& input_np,
+    pybind11::array_t<double>& w1_np,
+    pybind11::array_t<double>& b1_np,
+    pybind11::array_t<double>& w2_np,
+    pybind11::array_t<double>& b2_np
+) {
+    // --- Convert NumPy arrays to Eigen Maps (zero-copy) ---
+    // A Map is an Eigen object that wraps an existing block of memory.
+    // This is how we avoid copying data.
+    Eigen::Map<Eigen::VectorXd> input(static_cast<double*>(input_np.request().ptr), input_np.size());
+    
+    Eigen::Map<Eigen::MatrixXd> w1(static_cast<double*>(w1_np.request().ptr), w1_np.shape(0), w1_np.shape(1));
+    Eigen::Map<Eigen::VectorXd> b1(static_cast<double*>(b1_np.request().ptr), b1_np.size());
+    
+    Eigen::Map<Eigen::MatrixXd> w2(static_cast<double*>(w2_np.request().ptr), w2_np.shape(0), w2_np.shape(1));
+    Eigen::Map<Eigen::VectorXd> b2(static_cast<double*>(b2_np.request().ptr), b2_np.size());
+
+    // --- Call the core C++ engine ---
+    Eigen::VectorXd logits_eigen = forward_pass(input, w1, b1, w2, b2);
+
+    // --- Convert the Eigen result back to a new NumPy array ---
+    // This is the only data copy in the entire process.
+    pybind11::array_t<double> logits_np(logits_eigen.size());
+    double* ptr_np = static_cast<double*>(logits_np.request().ptr);
+    
+    // Copy data from Eigen vector to the new NumPy array
+    for (int i = 0; i < logits_eigen.size(); ++i) {
+        ptr_np[i] = logits_eigen(i);
+    }
+
+    return logits_np;
 }
