@@ -38,7 +38,7 @@ This project is developed and tested on WSL2 (Ubuntu 24.04), but should work on 
 
 ### 1. Clone the repository
 ```bash
-git clone [https://github.com/your-username/cpp-fundamentals.git](https://github.com/your-username/cpp-fundamentals.git)
+git clone https://github.com/Savernish/cpp-fundamentals
 cd cpp-fundamentals
 ```
 
