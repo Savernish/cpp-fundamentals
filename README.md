@@ -37,10 +37,10 @@ While Python is great for prototyping, production ML systems often need the spee
 This project is developed and tested on WSL2 (Ubuntu 24.04), but should work on any modern Linux with Python 3 and CMake 3.16+.
 
 ### 1. Clone the repository
-    ```bash
-    git clone [https://github.com/your-username/cpp-fundamentals.git](https://github.com/your-username/cpp-fundamentals.git)
-    cd cpp-fundamentals
-    ```
+```bash
+git clone [https://github.com/your-username/cpp-fundamentals.git](https://github.com/your-username/cpp-fundamentals.git)
+cd cpp-fundamentals
+```
 
 ### 2. Configure with CMake (for Python module)
 You must specify your Python version for PyBind11 to find the right headers. For example, for Python 3.11:
