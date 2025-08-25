@@ -3,7 +3,7 @@
 
 #include <Eigen/Dense>
 
-// This function is now pure C++/Eigen
+// The pure C++/Eigen forward pass (no Python stuff)
 Eigen::VectorXd forward_pass(
     const Eigen::VectorXd& input,
     const Eigen::MatrixXd& w1,

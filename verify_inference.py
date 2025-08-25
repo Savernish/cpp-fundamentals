@@ -2,7 +2,7 @@ import numpy as np
 import sys
 import time
 
-# We will need our original Network class from the ml-from-scratch project.
+# Using the original Network class from the ml-from-scratch project.
 # --- Start of copied code from ml-from-scratch ---
 class DenseLayer:
     def __init__(self, input_size, output_size):
@@ -28,14 +28,14 @@ class Network:
         return x
 # --- End of copied code ---
 
-# Import your C++ module
+# Import the C++ module
 sys.path.append('./build')
 import cpp_math
 
 def main():
     print("--- C++ Inference Engine Verification ---")
     
-    # 1. Load the trained weights from your scratch model
+    # 1. Load the trained weights from the scratch model
     weights_file = '../ml-from-scratch/neural_network/weights_biases.npz'
     try:
         weights = np.load(weights_file)
@@ -66,7 +66,7 @@ def main():
     print(f"\nPython/NumPy model execution time: {(end_py - start_py) * 1000:.4f} ms")
     print("Python Logits (first 5):", logits_py.flatten()[:5])
 
-    # 4. Get logits from your C++/Eigen engine
+    # 4. Get logits from the C++/Eigen engine
     start_cpp = time.time()
     logits_cpp = cpp_math.forward_pass_cpp(dummy_input, w1, b1, w2, b2)
     end_cpp = time.time()

@@ -1,16 +1,18 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/numpy.h>
-#include <pybind11/eigen.h> // Header for automatic Eigen::MatrixXd <-> NumPy conversion
+#include <pybind11/eigen.h> // Needed for Eigen/NumPy conversions
 
-// Include our pure C++ library headers
+#include "math_lib.h"
+#include "inference_lib.h"
+#include <Eigen/Dense>
 #include "math_lib.h"
 #include "inference_lib.h"
 #include <Eigen/Dense>
 
 namespace py = pybind11;
 
-// Wrapper for forward_pass to accept NumPy arrays and convert to Eigen
+// Wrapper to let Python/NumPy arrays work with the C++ Eigen code
 py::array_t<double> forward_pass_numpy(
     py::array_t<double>& input_np,
     py::array_t<double>& w1_np,
@@ -32,17 +34,14 @@ py::array_t<double> forward_pass_numpy(
     return logits_np;
 }
 
-// This is our main Python module, named 'cpp_math'
+// Python module entry point for the C++ code
 PYBIND11_MODULE(cpp_math, m) {
-    m.doc() = "High-performance C++ module for ML acceleration";
+    m.doc() = "C++/Eigen code exposed to Python. Solo dev project for the people.";
 
-    // Binding for the function from math_lib
+    // Expose add_vectors from the math_lib
     m.def("add_vectors", &add_vectors, "A function that adds two vectors element-wise.");
 
-    // Binding for the function from inference_lib
-    // PyBind11's <pybind11/eigen.h> header automatically handles the conversion
-    // between NumPy arrays and Eigen::MatrixXd / Eigen::VectorXd.
-    // This is much cleaner than our manual wrapper from before.
-    m.def("forward_pass_cpp", &forward_pass, "Performs a full MLP forward pass in C++ with Eigen.");
-    m.def("forward_pass_numpy", &forward_pass_numpy, "Performs a full MLP forward pass in C++ with Eigen, using NumPy arrays.");
+    // Expose forward_pass from the inference_lib (Eigen types work directly)
+    m.def("forward_pass_cpp", &forward_pass, "MLP forward pass in C++/Eigen (Eigen types)");
+    m.def("forward_pass_numpy", &forward_pass_numpy, "MLP forward pass in C++/Eigen (NumPy arrays)");
 }
