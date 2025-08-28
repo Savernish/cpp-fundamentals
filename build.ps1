@@ -37,12 +37,23 @@ Write-Host "Starting project build automation script for Windows..."
 Write-Host "`n--- Step 1: Cleaning previous build directory ---"
 Write-Host "Attempting to remove '$BuildDir' directory..."
 try {
-    # -ErrorAction Stop will cause the script to break here if the directory cannot be removed.
+    # Remove-Item with -Force does not throw an error if the path does not exist.
+    # We set -ErrorAction SilentlyContinue to gracefully handle other non-terminating errors (though -Force often prevents them).
+    # If a terminating error occurs (e.g., access denied), the catch block will handle it.
     Remove-Item -Path $BuildDir -Recurse -Force -ErrorAction Stop
-    Write-Host "${Blue}Successfully cleaned '$BuildDir'.${NC}"
+
+    # After attempting removal, check if the directory still exists.
+    # If it does, and it's not due to it simply not existing initially, then there was a problem.
+    if (Test-Path $BuildDir -PathType Container) {
+        Write-Host "${Red}WARNING:${NC} Could not fully clean '$BuildDir' (e.g., due to file locks or permissions). Proceeding anyway."
+    } else {
+        Write-Host "${Blue}Successfully cleaned '$BuildDir' (or it did not exist).${NC}"
+    }
 }
 catch {
-    Handle-Error "Failed to clean the build directory '$BuildDir'. Error: $($_.Exception.Message)"
+    # This catch block will only be hit if a *terminating* error occurred during Remove-Item,
+    # which is often more severe (like critical permissions issues that -Force can't overcome).
+    Write-Host "${Red}WARNING:${NC} Failed to clean the build directory '$BuildDir' due to a critical error: $($_.Exception.Message). Proceeding anyway."
 }
 
 
