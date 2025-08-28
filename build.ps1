@@ -8,10 +8,10 @@ $BuildDir = "build"   # Name of your build directory
 # --- ANSI Color Codes for PowerShell ---
 # Note: These colors require a modern PowerShell terminal (e.g., Windows Terminal)
 # or PowerShell 5.1+ with support for ANSI escape sequences.
-$Red = "`e[0;31m"
-$Green = "`e[0;32m"
-$Blue = "`e[0;34m"
-$NC = "`e[0m" # No Color
+$Red = "`e[0;31m]"
+$Green = "`e[0;32m]"
+$Blue = "`e[0;34m]"
+$NC = "`e[0m]" # No Color
 
 # --- Error Handling Function ---
 # This function is called if any command fails. It prints an error message
