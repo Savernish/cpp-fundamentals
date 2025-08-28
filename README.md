@@ -21,8 +21,8 @@ While Python is great for prototyping, production ML systems often need the spee
 | **Python Integration** | PyBind11: Basic Bindings | ✅ Done | Exposing C++ functions and classes to Python. |
 | | PyBind11: NumPy Integration | ✅ Done | Passing NumPy arrays to C++ efficiently without copying data. |
 | **ML Acceleration** | C++ Inference Engine | ✅ Done | Implementing a neural network forward pass in C++ using Eigen or a similar library. |
-| | C++ Accelerated Algorithms | ⏳ Planned | Rewriting performance-critical Python algorithms (e.g., in computer vision) in C++. |
-| **GPU Computing** | CUDA/Thrust Introduction | ⏳ Planned | Exploring basic GPU acceleration for parallelizable tasks. |
+| | C++ Accelerated Algorithms | ⏳ Planned for future | Rewriting performance-critical Python algorithms (e.g., in computer vision) in C++. |
+| **GPU Computing** | CUDA/Thrust Introduction | ⏳ Planned for future | Exploring basic GPU acceleration for parallelizable tasks. |
 
 ## Performance Results: C++ Accelerated Inference Engine
 
@@ -33,7 +33,7 @@ The benchmark was performed on a single image input, averaged over 2,000 runs.
 | Implementation | Average Inference Time (µs) | Speedup vs. NumPy |
 | :--- | :--- | :--- |
 | **Python (NumPy)** | 18.35 µs |
-| **C++ (Eigen, Release Build)** | 14.98 µs | **1.23x Faster** |
+| **C++ (Eigen, Release Build)** | 10.92 µs | **1.68x Faster** |
 
 
 This demonstrates a significant, measurable performance improvement by moving the core matrix operations to a compiled, optimized C++ backend.
@@ -56,20 +56,16 @@ git clone https://github.com/Savernish/cpp-fundamentals
 cd cpp-fundamentals
 ```
 
-### 2. Configure with CMake (for Python module)
-You must specify your Python version for PyBind11 to find the right headers. For example, for Python 3.11:
+### 2. Build the project with build.sh
 ```bash
-cmake -S . -B build -DPYTHON_EXECUTABLE=$(which python3.11)
+chmod +x build.sh
+./build.sh
 ```
 
-### 3. Build the project
-```bash
-cmake --build build
-```
-
-### 4. Run the Python verification
+### 4. Run the Python verification & benchmark
 The test harness compares the C++/Eigen neural network output to the reference Python/NumPy model:
 ```bash
-python3 verify_inference.py
+python verify_inference.py
+python benchmark.py
 ```
 You should see matching outputs and timing for both implementations.
