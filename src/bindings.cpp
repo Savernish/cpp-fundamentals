@@ -1,6 +1,6 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/eigen.h>
-#include "inference_lib.h" // Our new MLP class header
+#include "inference_lib.h"
 
 namespace py = pybind11;
 

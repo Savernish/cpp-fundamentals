@@ -5,7 +5,6 @@ import timeit
 sys.path.append('./build')
 import cpp_math
 
-# ... (Keep the NumPyNetwork class and its helpers as they were) ...
 class DenseLayer:
     def __init__(self, w, b): self.weights = w; self.biases = b
     def forward(self, i): return np.dot(i, self.weights) + self.biases
@@ -34,7 +33,7 @@ def run_benchmark():
 
     numpy_model = NumPyNetwork(w1, b1, w2, b2)
     
-    # --- THE FIX IS HERE: Instantiate the C++ object ONCE ---
+    #Instantiate the C++ object ONCE
     cpp_model = cpp_math.MLP(w1, b1, w2, b2)
     
     test_input_row = np.random.rand(1, 784).astype(np.float64)
