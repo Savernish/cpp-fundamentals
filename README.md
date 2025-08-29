@@ -68,9 +68,7 @@ The build script will automatically:
 - Configure and build the project with CMake
 
 ### 3. Run the Python verification & benchmark
-The test harness compares the C++/Eigen neural network output to the reference Python/NumPy model:
+This will run the benchmark and verification tests:
 ```bash
-python verify_inference.py
 python benchmark.py
 ```
-You should see matching outputs and timing for both implementations.
