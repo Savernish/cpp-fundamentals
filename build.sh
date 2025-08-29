@@ -63,6 +63,16 @@ fi
 PYTHON_EXEC=$(which python)
 echo -e "${BLUE}Using Python executable: $PYTHON_EXEC${NC}"
 
+# Install Python dependencies from requirements.txt
+if [ -f "requirements.txt" ]; then
+    echo -e "\n--- Step 2.5: Installing Python dependencies ---"
+    echo "Installing required Python packages from requirements.txt..."
+    pip install -r requirements.txt || handle_error "Failed to install Python dependencies from requirements.txt"
+    echo -e "${BLUE}Python dependencies installed successfully.${NC}"
+else
+    echo -e "${BLUE}No requirements.txt found, skipping Python dependency installation.${NC}"
+fi
+
 # Configure CMake
 echo "Running CMake configuration..."
 # -S . : Source directory is the current directory

@@ -61,8 +61,13 @@ cd cpp-fundamentals
 chmod +x build.sh
 ./build.sh
 ```
+The build script will automatically:
+- Create and clean the build directory
+- Activate the specified Conda environment (default: "ml")
+- Install required Python dependencies from requirements.txt
+- Configure and build the project with CMake
 
-### 4. Run the Python verification & benchmark
+### 3. Run the Python verification & benchmark
 The test harness compares the C++/Eigen neural network output to the reference Python/NumPy model:
 ```bash
 python verify_inference.py
