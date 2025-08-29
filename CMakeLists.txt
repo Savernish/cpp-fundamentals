@@ -24,7 +24,7 @@ target_include_directories(inference_lib PUBLIC
 )
 
 # --- Find PyBind11 and build the final Python module ---
-add_subdirectory(third_party/pybind11)
+find_package(pybind11 REQUIRED)
 
 # This is the ONLY target that knows about PyBind11.
 pybind11_add_module(cpp_math src/bindings.cpp)

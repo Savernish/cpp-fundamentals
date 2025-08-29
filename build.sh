@@ -29,21 +29,8 @@ echo "Starting project build automation script..."
 # 1. Clean the old build directory
 echo -e "\n--- Step 1: Cleaning previous build directory ---"
 echo "Attempting to remove '$BUILD_DIR' directory..."
-# Attempt to remove the directory. 'rm -rf' does not fail if the directory does not exist.
-# We will check its existence afterwards for a more specific warning if removal fails for other reasons.
-if rm -rf "$BUILD_DIR"; then
-    # Check if the directory still exists after attempting removal
-    if [ -d "$BUILD_DIR" ]; then
-        echo -e "${RED}WARNING:${NC} Could not fully clean '$BUILD_DIR' (e.g., due to file locks or permissions). Proceeding anyway."
-    else
-        echo -e "${BLUE}Successfully cleaned '$BUILD_DIR' (or it did not exist).${NC}"
-    fi
-else
-    # This block will be hit if 'rm -rf' itself returns a non-zero exit code,
-    # which is rare but could happen in extreme cases (e.g., permissions on the parent directory).
-    echo -e "${RED}WARNING:${NC} Failed to clean the build directory '$BUILD_DIR' due to a critical error. Proceeding anyway."
-fi
-
+rm -rf "$BUILD_DIR" || handle_error "Failed to clean the build directory '$BUILD_DIR'."
+echo -e "${BLUE}Successfully cleaned '$BUILD_DIR'.${NC}"
 
 # 2. Re-configure the project with CMake
 echo -e "\n--- Step 2: Configuring new Release build with CMake ---"
@@ -74,7 +61,7 @@ if ! command -v python &> /dev/null; then
     handle_error "Python executable not found in PATH after activating '$CONDA_ENV_NAME' conda environment. Check your environment setup."
 fi
 PYTHON_EXEC=$(which python)
-echo "Using Python executable: $PYTHON_EXEC"
+echo -e "${BLUE}Using Python executable: $PYTHON_EXEC${NC}"
 
 # Configure CMake
 echo "Running CMake configuration..."

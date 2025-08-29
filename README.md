@@ -56,27 +56,11 @@ git clone https://github.com/Savernish/cpp-fundamentals
 cd cpp-fundamentals
 ```
 
-### 3. Build the project on Windows with PowerShell
-
-#### on Windows
-If you're on Windows, use the provided PowerShell script. First, ensure you can run local scripts:
-
-```powershell
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
-
-Then build the project:
-
-```powershell
-.\build.ps1
-```
-#### on Linux
-
+### 2. Build the project with build.sh
 ```bash
 chmod +x build.sh
 ./build.sh
 ```
-
 
 ### 4. Run the Python verification & benchmark
 The test harness compares the C++/Eigen neural network output to the reference Python/NumPy model:
