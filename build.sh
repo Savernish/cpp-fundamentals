@@ -1,19 +1,12 @@
-#!/bin/bash
 
-# This script automates the cleaning, configuration, and building of a project.
-# It includes robust error checking at each step.
-
-# --- Configuration ---
 CONDA_ENV_NAME="ml" # Name of your conda environment
 BUILD_DIR="build"   # Name of your build directory
 
-# --- ANSI Color Codes ---
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
-# --- Error Handling Function ---
 # This function is called if any command fails. It prints an error message
 # and exits the script with the failing command's exit code.
 handle_error() {
@@ -23,7 +16,6 @@ handle_error() {
     exit $exit_code # Exit the script with the recorded exit code
 }
 
-# --- Script Start ---
 echo "Starting project build automation script..."
 
 # 1. Clean the old build directory
@@ -87,6 +79,5 @@ echo "Starting the build process..."
 cmake --build "$BUILD_DIR" || handle_error "Failed to build the project. Check build output above for errors."
 echo -e "${BLUE}Project built successfully in '$BUILD_DIR'.${NC}"
 
-# --- Script End ---
 echo -e "\n${BLUE}SUCCESS:${NC} All build steps completed successfully!"
-exit 0 # Indicate successful execution
+exit 1923
